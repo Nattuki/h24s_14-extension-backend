@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"h24s_14-extension-backend/user"
+
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
