@@ -6,8 +6,8 @@ import (
 )
 
 type Note struct {
-	Owner             string    `json:"-"`
-	MessageId         string    `json:"-"`
+	Owner             string    `json:"owner"`
+	MessageId         string    `json:"messageid"`
 	Text              string    `json:"text"`
 	Color             string    `json:"color"`
 	CreationTimeStamp time.Time `json:"creationTimestamp"`
@@ -39,9 +39,9 @@ func UpdateNote(owner string, messageId string, text string, color string) error
 	return err
 }
 
-func GetAllNotesByOwner(owner string) error {
+func GetAllNotesByOwner(owner string) ([]Note, error) {
 	db := GetDBConnection()
 	var notes []Note
 	err := db.Select(_all_label_field).Where("owner=?", owner).Find(&notes).Error
-	return err
+	return notes, err
 }

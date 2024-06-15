@@ -2,6 +2,7 @@ package main
 
 import (
 	"h24s_14-extension-backend/database"
+	"log"
 
 	"h24s_14-extension-backend/handler"
 	"h24s_14-extension-backend/middleware"
@@ -16,7 +17,15 @@ func main() {
 
 	withAuth := e.Group("")
 	withAuth.Use(middleware.SetUserInformationToSess)
-
+	e.GET("/loginpath", handler.HandleGetOAuthUrl)
+	e.GET("/gettoken", handler.HandleGetToken)
 	withAuth.GET("/me", handler.HandleGetMe)
+	withAuth.GET("/note/:owner", handler.HandleGetNotes)
+	withAuth.POST("/note", handler.HandleUpdateNote)
+	withAuth.DELETE("/note", handler.HandleDeleteNote)
 
+	err := e.Start(":8080")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
