@@ -41,7 +41,7 @@ func init() {
 }
 
 func HandleGetOAuthUrl(c echo.Context) error {
-	sess, err := session.Get("LABEL_session", c)
+	sess, err := session.Get("note_session", c)
 	if err != nil {
 		log.Println(err)
 		return c.String(http.StatusInternalServerError, "Failed to get the session.")
@@ -70,7 +70,7 @@ func HandleGetOAuthUrl(c echo.Context) error {
 }
 
 func HandleGetToken(c echo.Context) error {
-	sess, err := session.Get("LABEL_session", c)
+	sess, err := session.Get("note_session", c)
 	if err != nil {
 		log.Println(err)
 		return c.String(http.StatusInternalServerError, "Failed to get the session.")
