@@ -30,6 +30,11 @@ func SetUserInformationToSess(next echo.HandlerFunc) echo.HandlerFunc {
 		sess.Values["my_icon_base64"] = myInformation.IconBase64
 		sess.Values["is_visitor"] = myInformation.IsVisitor
 
+		//isVisitorそもそも必要なさそうなので後できれいにする
+		if myInformation.IsVisitor {
+			return c.String(http.StatusForbidden, "auth failed")
+		}
+
 		return next(c)
 	}
 }
