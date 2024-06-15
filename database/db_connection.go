@@ -2,9 +2,13 @@ package database
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"sync"
 
+	"github.com/labstack/echo-contrib/session"
+	"github.com/labstack/echo/v4"
+	"github.com/srinathgs/mysqlstore"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -40,4 +44,14 @@ func GetDBConnection() *gorm.DB {
 	})
 
 	return label_mysql
+}
+
+func UseSessionStore(e *echo.Echo) {
+	db := GetDBConnection()
+	db_sql, _ := db.DB()
+	store, err := mysqlstore.NewMySQLStoreFromConnection(db_sql, "sessions", "/", 60*60*24*14, []byte("secret-token"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	e.Use(session.Middleware(store))
 }
