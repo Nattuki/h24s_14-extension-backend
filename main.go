@@ -20,9 +20,10 @@ func main() {
 	e.GET("/loginpath", handler.HandleGetOAuthUrl)
 	e.GET("/gettoken", handler.HandleGetToken)
 	withAuth.GET("/me", handler.HandleGetMe)
-	withAuth.GET("/note/:owner", handler.HandleGetNotes)
-	withAuth.POST("/note", handler.HandleUpdateNote)
-	withAuth.DELETE("/note", handler.HandleDeleteNote)
+	withAuth.GET("/note/get/:owner", handler.HandleGetNotes)
+	withAuth.POST("/note/create", handler.HandleCreateNote)
+	withAuth.POST("/note/update", handler.HandleUpdateNote)
+	withAuth.DELETE("/note/delete", handler.HandleDeleteNote)
 
 	err := e.Start(":8080")
 	if err != nil {
